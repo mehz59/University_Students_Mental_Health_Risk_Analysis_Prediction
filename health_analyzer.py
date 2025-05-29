@@ -10,7 +10,7 @@ from sklearn.metrics import classification_report,accuracy_score
 from sklearn.preprocessing import LabelEncoder
 
 def load_and_process():
-    df = pd.read_csv(r'F:\code in place\Project\students_mental_health_survey.csv')
+    df = pd.read_csv(r'F:\code in place\Project\students_mental_health_survey.csv')  # Dataset: http://kaggle.com/datasets/sonia22222/students-mental-health-assessments
     df = df.dropna()
     #If the person has depression score more than 2 and anxiety score more than 2.then the person is at risk
     df['has_issue']=((df['Depression_Score']>2) | (df['Anxiety_Score']>2)).astype(int)
