@@ -14,12 +14,10 @@ def load_and_process():
     df = df.dropna()
     #If the person has depression score more than 2 and anxiety score more than 2.then the person is at risk
     df['has_issue']=((df['Depression_Score']>2) | (df['Anxiety_Score']>2)).astype(int)
-    features = [
-        'Gender','Course','CGPA','Stress_Level','Sleep_Quality','Physical_Activity',
+    features= ['Gender','Course','CGPA','Stress_Level','Sleep_Quality','Physical_Activity',
         'Diet_Quality','Social_Support','Relationship_Status','Substance_Use',
         'Counseling_Service_Use','Family_History','Chronic_Illness',
-        'Financial_Stress','Extracurricular_Involvement'
-    ]
+        'Financial_Stress','Extracurricular_Involvement']
     label_encoders={}
     for column in features:
         if df[column].dtype == 'object':
@@ -31,13 +29,13 @@ def load_and_process():
 def train_model(df,features):
     X = df[features]
     y = df['has_issue']
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    X_train,X_test,y_train,y_test=train_test_split(X,y,test_size=0.2,random_state=42)
     model = RandomForestClassifier()
-    model.fit(X_train, y_train)
+    model.fit(X_train,y_train)
     predictions = model.predict(X_test)
     print("\nModel Evaluation")
-    print("Accuracy:",accuracy_score(y_test, predictions))
-    print("\n",classification_report(y_test, predictions))
+    print("Accuracy:",accuracy_score(y_test,predictions))
+    print("\n",classification_report(y_test,predictions))
     return model
 
 def predict_user(model,label_encoders):
@@ -48,6 +46,7 @@ def predict_user(model,label_encoders):
     user_input['CGPA']=float(input("CGPA(0.0-4.0): "))
     user_input['Stress_Level']=int(input("Stress Level(0-4): "))
 
+    
     user_input['Sleep_Quality']=input("Sleep Quality(Poor/Average/Good): ").strip().capitalize()
     user_input['Physical_Activity']=input("Physical Activity(Low/Moderate/High): ").strip().capitalize()
     user_input['Diet_Quality']=input("Diet Quality(Poor/Average/Good): ").strip().capitalize()
@@ -79,7 +78,7 @@ def predict_user(model,label_encoders):
     if prediction==1:
         print("High Risk of Mental Health Issues.Recommend counseling.")
     else:
-        print("No high risk detected. Keep maintaining your mental wellness!")
+        print("No high risk detected.Keep maintaining your mental wellness!")
 
 
 
@@ -98,8 +97,8 @@ def show_data_insights(df):
 
 def main():
     print("Student Mental Health Risk Analyzer")
-    df,features,encoders = load_and_process()
-    model=train_model(df, features)
+    df,features,encoders=load_and_process()
+    model=train_model(df,features)
     while True:
         print("\n options:")
         print("1.Predict Mental Health Risk")
